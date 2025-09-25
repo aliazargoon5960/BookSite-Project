@@ -53,3 +53,6 @@ class AuthorDetailView(DetailView):
         context = super().get_context_data(**kwargs)
         context['books'] = Book.objects.filter(author=self.object)
         return context
+
+def Hello(request):
+    return redirect('books:home')
