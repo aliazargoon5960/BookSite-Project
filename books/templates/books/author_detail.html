@@ -1,0 +1,54 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block page_title %}
+
+    Author Detail
+
+{% endblock page_title %}
+
+
+{% block content %}
+    <section id="book-detail">
+        <div class="container">
+            <div class="row justify-content-center">
+            <div class="col-md-8">
+                <h2 class="text-start">{{ author.fullname }}</h2>
+                <p class="text-start"><strong>Age:</strong> {{ author.age }}</p>
+                <p class="text-start">{{ author.bio }}</p>
+                <img src="{{ author.photo.url }}" alt="{{ author.fullname }}" class="book-detail-image mt-3 mx-auto d-block">
+                <br>
+            </div>
+            </div>
+        </div>
+
+    </section>
+
+    <section class="bookshelf py-5">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">Books by {{ author.fullname }}</h2>
+            </div>
+            <div class="row">
+                {% for book in books %}
+                    <div class="col-md-4">
+                        <div class="product-item">
+                            <figure class="product-style">
+                                <img src="{{ book.image.url }}" alt="{{ book.title }}" class="product-thumb">
+                                <a href="{{ book.get_absolute_url }}" class="add-to-cart">View Book</a>
+                            </figure>
+                            <figcaption>
+                                <h3>{{ book.title }}</h3>
+                                <p class="text-muted small">{{ book.description|truncatewords:20 }}</p>
+                            </figcaption>
+                        </div>
+                    </div>
+                {% empty %}
+                    <p class="text-center">This author has no books yet.</p>
+                {% endfor %}
+            </div>
+        </div>
+    </section>
+
+
+{% endblock content %}

@@ -1,0 +1,315 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block page_title %}
+
+    Book Site
+
+{% endblock page_title %}
+
+
+{% block content %}
+
+
+	<section id="billboard">
+
+		<div class="container">
+			<div class="row">
+				<div class="col-md-12">
+
+					<button class="prev slick-arrow">
+						<i class="icon icon-arrow-left"></i>
+					</button>
+
+					<div class="main-slider pattern-overlay">
+					{% for banner in banners %}						
+						<div class="slider-item">
+							<div class="banner-content">
+								<h2 class="banner-title">{{ banner.title_baner }}</h2>
+								<p>{{ banner.description_baner }}</p>
+								<div class="btn-wrap">
+									<a href="#" class="btn btn-outline-accent btn-accent-arrow">Read More<i
+											class="icon icon-ns-arrow-right"></i></a>
+								</div>
+							</div><!--banner-content-->
+							<img src="{{ banner.image_baner.url }}" alt="banner" class="banner-image">
+						</div><!--slider-item-->
+					{% endfor %}
+					</div><!--slider-->
+					<button class="next slick-arrow">
+						<i class="icon icon-arrow-right"></i>
+					</button>
+
+				</div>
+			</div>
+		</div>
+
+	</section>
+
+	<section id="client-holder" data-aos="fade-up">
+		<div class="container">
+			<div class="row">
+				<div class="inner-content">
+					<div class="logo-wrap">
+						<div class="grid">
+							<a href="#"><img src="{% static "images/client-image1.png" %}" alt="client"></a>
+							<a href="#"><img src="{% static "images/client-image2.png" %}" alt="client"></a>
+							<a href="#"><img src="{% static "images/client-image3.png" %}" alt="client"></a>
+							<a href="#"><img src="{% static "images/client-image4.png" %}" alt="client"></a>
+							<a href="#"><img src="{% static "images/client-image5.png" %}" alt="client"></a>
+						</div>
+					</div><!--image-holder-->
+				</div>
+			</div>
+		</div>
+	</section>
+
+	<section id="featured-books" class="py-5 my-5">
+		<div class="container">
+			<div class="row">
+				<div class="col-md-12">
+
+					<div class="section-header align-center">
+						<div class="title">
+							<span>Some quality items</span>
+						</div>
+						<h2 class="section-title">Featured Books</h2>
+					</div>
+
+					<div class="product-list" data-aos="fade-up">
+						<div class="row">
+
+							{% for book in books|slice:":4" %}
+							<div class="col-md-3">
+								<div class="product-item">
+									<figure class="product-style">
+										<a href="{{ book.get_absolute_url }}">
+										<img src="{{ book.image.url }}"  alt="Books" class="product-item">
+										</a>
+									</figure>
+									<figcaption>
+										<a href="{{ book.get_absolute_url }}"><h3>{{ book.title }}</h3></a>
+										<a href="{{ book.author.get_absolute_url }}"> 
+											<span>{{ book.author }} </span>
+										</a>
+										<div class="item-price">${{ book.price }} </div>
+									</figcaption>
+								</div>
+							</div>
+							{% endfor %}
+
+						</div><!--ft-books-slider-->
+					</div><!--grid-->
+
+
+				</div><!--inner-content-->
+			</div>
+
+			<div class="row">
+				<div class="col-md-12">
+
+					<div class="btn-wrap align-right">
+						<a href="#" class="btn-accent-arrow">View all products <i
+								class="icon icon-ns-arrow-right"></i></a>
+					</div>
+
+				</div>
+			</div>
+		</div>
+	</section>
+
+	<section id="best-selling" class="leaf-pattern-overlay">
+		<div class="corner-pattern-overlay"></div>
+		<div class="container">
+			<div class="row justify-content-center">
+
+				<div class="col-md-8">
+
+					<div class="row">
+						 
+						<div class="col-md-6">
+							<figure class="products-thumb">
+								<a href="{{ cheapest_book.get_absolute_url }}">
+								<img src="{{ cheapest_book.image.url }}" alt="{{ cheapest_book.title }}" class="single-image">
+								</a>
+							</figure>
+						</div>
+						<div class="col-md-6">
+							<div class="product-entry">
+								<h2 class="section-title divider">Best Selling Book</h2>
+
+								<div class="products-content">
+									<a href="{{ cheapest_book.author.get_absolute_url }}"> 
+										<div class="author-name">By {{ cheapest_book.author }}</div>
+									</a>
+									<a href="{{ cheapest_book.get_absolute_url }}">
+										<h3 class="item-title"> {{ cheapest_book.title }} </h3>
+									</a>
+									<p> {{ cheapest_book.description }} </p>
+									<div class="item-price">${{ cheapest_book.price }}</div>
+									<div class="btn-wrap">
+										<a href="#" class="btn-accent-arrow">shop it now <i
+												class="icon icon-ns-arrow-right"></i></a>
+									</div>								
+								</div>
+							</div>
+						</div>
+					</div>
+					<!-- / row -->
+
+				</div>
+
+			</div>
+		</div>
+	</section>
+
+	<section id="popular-books" class="bookshelf py-5 my-5">
+		<div class="container">
+			<div class="row">
+				<div class="col-md-12">
+
+					<div class="section-header align-center">
+						<div class="title">
+							<span>Some quality items</span>
+						</div>
+						<h2 class="section-title">Popular Books</h2>
+					</div>
+
+					<ul class="tabs">
+						<li data-tab-target="#all-genre" class="{% if not active_category %}active{% endif %} tab">All Genre</li>
+						
+						{% for category in categories %}
+							<li data-tab-target="#{{ category.slug }}" class="{% if active_category == category.title %}active{% endif %} tab">
+								{{ category.title }}
+							</li>
+						{% endfor %}
+					</ul>
+					<div class="tab-content">
+						<div id="all-genre" data-tab-content class="active">
+							<div class="row">
+								{% for book in books%}
+								<div class="col-md-3">
+									<div class="product-item">
+										<figure class="product-style">
+											<a href="{{ book.get_absolute_url }}">
+												<img src="{{ book.image.url }}" alt="Books" class="product-item">
+											</a>
+										</figure>
+										<figcaption>
+											<a href="{{ book.get_absolute_url }}">
+												<h3>{{ book.title }}</h3>
+											</a>
+											<a href="{{ book.author.get_absolute_url }}"> 
+												<span> {{ book.author }} </span>
+											</a>
+											<div class="item-price">${{ book.price }}</div>
+										</figcaption>
+									</div>
+								</div>
+								{% endfor %}
+							</div>
+							<nav aria-label="Page navigation">
+								<ul class="pagination justify-content-center mt-4">
+									{% if page_obj.has_previous %}
+										<li class="page-item">
+											<a class="page-link" href="?page={{ page_obj.previous_page_number }}#all-genre" aria-label="Previous">
+												<span aria-hidden="true">&laquo;</span>
+											</a>
+										</li>
+									{% endif %}
+
+									{% for num in page_obj.paginator.page_range %}
+										<li class="page-item {% if page_obj.number == num %}active{% endif %}">
+											<a class="page-link" href="?page={{ num }}#all-genre">{{ num }}</a>
+										</li>
+									{% endfor %}
+
+									{% if page_obj.has_next %}
+										<li class="page-item">
+											<a class="page-link" href="?page={{ page_obj.next_page_number }}#all-genre" aria-label="Next">
+												<span aria-hidden="true">&raquo;</span>
+											</a>
+										</li>
+									{% endif %}
+								</ul>
+							</nav>
+						</div>
+						{% for category in categories %}
+								<div id="{{ category.slug }}" data-tab-content>
+									<div class="row">
+										{% for book in category.books.all %}
+											<div class="col-md-3">
+												<div class="product-item">
+													<figure class="product-style">
+														<a href="{{ book.get_absolute_url }}">
+															<img src="{{ book.image.url }}" alt="{{ book.title }}" class="product-item">
+														</a>
+													</figure>
+													<figcaption>
+														<a href="{{ book.get_absolute_url }}">
+															<h3>{{ book.title }}</h3>
+														</a>
+														<a href="{{ book.author.get_absolute_url }}"> 
+															<span>{{ book.author }}</span>
+														</a>
+														<div class="item-price">${{ book.price }}</div>
+													</figcaption>
+												</div>
+											</div>
+										{% endfor %}
+									</div>
+								</div>
+							{% endfor %}
+
+					</div>
+
+				</div><!--inner-tabs-->
+
+			</div>
+		</div>
+	</section>
+
+	<section id="quotation" class="align-center pb-5 mb-5">
+		<div class="inner-content">
+			<h2 class="section-title divider">Quote of the day</h2>
+			<blockquote data-aos="fade-up">
+				<q>“The more that you read, the more things you will know. The more that you learn, the more places
+					you’ll go.”</q>
+				<div class="author-name">Dr. Seuss</div>
+			</blockquote>
+		</div>
+	</section>
+
+
+	<section id="special-offer" class="bookshelf pb-5 mb-5">
+
+		<div class="section-header align-center">
+			<div class="title">
+				<span>Grab your opportunity</span>
+			</div>
+			<h2 class="section-title">Author List</h2>
+		</div>
+
+		<div class="container py-5">
+			<div class="row text-center">
+				{% for author in authors %}
+					<div class="col-12 col-sm-6 col-md-4 mb-4">
+						<div class="card border-0 shadow rounded-4 p-4 h-100">
+							<a href="{{ author.get_absolute_url }}"> 
+								<img src="{{ author.photo.url }}" alt="{{ author.fullname }}"
+								class="rounded-circle mx-auto d-block mb-3" style="width: 120px; height: 120px; object-fit: cover;">
+							</a>
+							<a href="{{ author.get_absolute_url }}"> 
+								<h5 class="fw-bold text-dark mb-2">{{ author.fullname }}</h5>
+							</a>
+							<p class="text-muted small">{{ author.bio }}</p>
+						</div>
+					</div>
+				{% endfor %}
+			</div>
+		</div>
+
+	</section>
+
+
+{% endblock content %}

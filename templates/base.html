@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+
+<head>
+     
+    {% include "includes/head_links.html" %}
+
+</head>
+
+<body data-bs-spy="scroll" data-bs-target="#header" tabindex="0">
+
+    <!--header-->
+    {% include "includes/header.html" %}
+    <!--header-->
+
+    {% block content %}
+    
+    
+    
+    
+    {% endblock content %}
+
+
+    
+    {% include "includes/footer.html" %}
+
+    {% include "includes/footer_links.html" %}
+
+</body>
+
+</html>

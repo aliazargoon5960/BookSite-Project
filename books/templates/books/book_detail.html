@@ -1,0 +1,34 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block page_title %}
+
+    Detial Book
+
+{% endblock page_title %}
+
+
+{% block content %}
+    <section id="book-detail">
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="col-md-8">
+                    <h2 class="text-start">{{ book.title }}</h2>
+                    <p class="text-start"><strong>Category:</strong> {{ book.category.title }}</p>
+                    <p class="text-start"><strong>Author:</strong> {{ book.author }}</p>
+                    <p class="text-start">{{ book.description }}</p>
+                    <img src="{{ book.image.url }}" alt="{{ book.title }}" class="book-detail-image mt-3 mx-auto d-block">
+
+                    <form method="post" action="{% url 'cart:cart_add' book.id %}">
+                        {% csrf_token %}
+                        <label for="quantity">quantity:</label>
+                        <input type="number" name="quantity" id="quantity" value="1" min="1" max="10">
+                        <button type="submit">Add to Cart</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+{% endblock content %}
